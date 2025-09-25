@@ -1,12 +1,15 @@
 package GreenPrint.api.controller;
 
 import GreenPrint.api.produto.DadosCadastroProduto;
+import GreenPrint.api.produto.DadosListagemProduto;
 import GreenPrint.api.produto.Produto;
 import GreenPrint.api.produto.ProdutoRepository;
-import GreenPrint.api.produto.TipoPapelao;
-import GreenPrint.api.produto.TipoPapelaoRepository;
+import GreenPrint.api.tipo_papelao.TipoPapelao;
+import GreenPrint.api.tipo_papelao.TipoPapelaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("produtos")
@@ -28,5 +31,10 @@ public class ProdutoController {
         Produto produto = new Produto(dados, tipo);
 
         repository.save(produto);
+    }
+
+    @GetMapping
+    public List<DadosListagemProduto> listar(){
+        return repository.findAll().stream().map(DadosListagemProduto::new).toList();
     }
 }

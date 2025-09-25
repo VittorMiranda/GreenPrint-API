@@ -1,4 +1,4 @@
-package GreenPrint.api.produto;
+package GreenPrint.api.tipo_papelao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

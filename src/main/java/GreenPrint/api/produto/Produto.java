@@ -1,5 +1,6 @@
 package GreenPrint.api.produto;
 
+import GreenPrint.api.tipo_papelao.TipoPapelao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
@@ -8,7 +9,6 @@ import lombok.*;
 @Table(name = "produto")
 @Entity(name = "Produto")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "idProduto")
