@@ -1,12 +1,14 @@
 package GreenPrint.api.controller;
 
-import GreenPrint.api.produto.DadosCadastroProduto;
-import GreenPrint.api.produto.DadosListagemProduto;
-import GreenPrint.api.produto.Produto;
-import GreenPrint.api.produto.ProdutoRepository;
+import GreenPrint.api.produto.*;
 import GreenPrint.api.tipo_papelao.TipoPapelao;
 import GreenPrint.api.tipo_papelao.TipoPapelaoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class ProdutoController {
     private TipoPapelaoRepository tipoPapelaoRepository;
 
     @PostMapping
+    @Transactional
     public void cadastrar(@RequestBody DadosCadastroProduto dados){
         // Busca a entidade TipoPapelao pelo ID do DTO
         TipoPapelao tipo = tipoPapelaoRepository.findById(dados.idTipoPapelao())
@@ -34,7 +37,21 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public List<DadosListagemProduto> listar(){
-        return repository.findAll().stream().map(DadosListagemProduto::new).toList();
+    public Page<DadosListagemProduto> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable){
+        return repository.findAll(pageable).map(DadosListagemProduto::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoProduto dados){
+        var produto = repository.getReferenceById(dados.id());
+        produto.atualizarInformacoes(dados);
+
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deletar(@PathVariable Long id){
+        repository.deleteById(id);
     }
 }

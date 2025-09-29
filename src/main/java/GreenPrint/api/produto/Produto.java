@@ -4,11 +4,13 @@ import GreenPrint.api.tipo_papelao.TipoPapelao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.*;
 
 @Table(name = "produto")
 @Entity(name = "Produto")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "idProduto")
@@ -46,4 +48,9 @@ public class Produto {
         this.tipoPapelao = tipoPapelao;
     }
 
+    public void atualizarInformacoes(DadosAtualizacaoProduto dados) {
+        if (dados.quantidadeEstoque() != null) {
+            this.quantidadeEstoque = dados.quantidadeEstoque();
+        }
+    }
 }

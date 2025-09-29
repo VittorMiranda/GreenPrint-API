@@ -31,4 +31,8 @@ public class TipoPapelaoController {
         return  tipoPapelaoRepository.findAll();
 
     }
+
+    public void atualizarTipoPapelao(){
+
+    }
 }
