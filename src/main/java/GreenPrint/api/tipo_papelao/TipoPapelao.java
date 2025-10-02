@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "idTipoPapelao")
 public class TipoPapelao {
 
     @Id
@@ -21,5 +21,14 @@ public class TipoPapelao {
     public TipoPapelao(DadosCadastroTipoPapelao dados) {
         this.nome = dados.nome();
         this.descricao = dados.descricao();
+    }
+
+    public void atualizarInformacoes(DadosAtualizarTipoPapelao dados){
+        if (dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if (dados.descricao() != null){
+            this.descricao = dados.descricao();
+        }
     }
 }
