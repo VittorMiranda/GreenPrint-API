@@ -1,6 +1,7 @@
-package GreenPrint.api.produto;
+package GreenPrint.api.domain.produto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record DadosCadastroProduto(
         @NotBlank
@@ -15,11 +16,10 @@ public record DadosCadastroProduto(
         String cor,
         @NotBlank
         String nomeProjeto,
-
         String descricaoProjeto,
-        @NotBlank
+        @NotNull
         Integer volumeSuportado,
-        @NotBlank
+        @NotNull
         Integer quantidadeEstoque,
         @NotBlank
         Long idTipoPapelao

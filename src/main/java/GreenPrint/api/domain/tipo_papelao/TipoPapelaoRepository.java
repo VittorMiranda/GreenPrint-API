@@ -1,4 +1,4 @@
-package GreenPrint.api.tipo_papelao;
+package GreenPrint.api.domain.tipo_papelao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

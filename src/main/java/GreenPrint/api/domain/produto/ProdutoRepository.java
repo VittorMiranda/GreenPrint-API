@@ -1,4 +1,4 @@
-package GreenPrint.api.produto;
+package GreenPrint.api.domain.produto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

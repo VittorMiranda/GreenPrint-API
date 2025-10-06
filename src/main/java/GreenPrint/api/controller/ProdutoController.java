@@ -1,8 +1,8 @@
 package GreenPrint.api.controller;
 
-import GreenPrint.api.produto.*;
-import GreenPrint.api.tipo_papelao.TipoPapelao;
-import GreenPrint.api.tipo_papelao.TipoPapelaoRepository;
+import GreenPrint.api.domain.produto.*;
+import GreenPrint.api.domain.tipo_papelao.TipoPapelao;
+import GreenPrint.api.domain.tipo_papelao.TipoPapelaoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("produtos")
@@ -27,7 +25,7 @@ public class ProdutoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody DadosCadastroProduto dados, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroProduto dados, UriComponentsBuilder uriComponentsBuilder){
         // Busca a entidade TipoPapelao pelo ID do DTO
         TipoPapelao tipo = tipoPapelaoRepository.findById(dados.idTipoPapelao())
                 .orElseThrow(() -> new RuntimeException("Tipo de papelão não encontrado"));
@@ -64,5 +62,13 @@ public class ProdutoController {
         repository.deleteById(id);
 
         return  ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id){
+
+        var produto = repository.getReferenceById(id);
+
+        return  ResponseEntity.ok(new DadosDetalhamentoProduto(produto));
     }
 }

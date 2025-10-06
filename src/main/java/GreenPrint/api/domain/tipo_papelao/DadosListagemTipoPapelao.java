@@ -1,4 +1,4 @@
-package GreenPrint.api.tipo_papelao;
+package GreenPrint.api.domain.tipo_papelao;
 
 public record DadosListagemTipoPapelao(Long id, String nome, String descricao) {
 

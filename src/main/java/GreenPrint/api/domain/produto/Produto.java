@@ -1,10 +1,9 @@
-package GreenPrint.api.produto;
+package GreenPrint.api.domain.produto;
 
-import GreenPrint.api.tipo_papelao.TipoPapelao;
+import GreenPrint.api.domain.tipo_papelao.TipoPapelao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-import jakarta.validation.Valid;
 import lombok.*;
 
 @Table(name = "produto")

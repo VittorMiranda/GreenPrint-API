@@ -1,4 +1,4 @@
-package GreenPrint.api.produto;
+package GreenPrint.api.domain.produto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
 package GreenPrint.api.controller;
 
 
-import GreenPrint.api.tipo_papelao.*;
+import GreenPrint.api.domain.tipo_papelao.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

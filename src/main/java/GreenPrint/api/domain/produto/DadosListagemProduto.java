@@ -1,4 +1,4 @@
-package GreenPrint.api.produto;
+package GreenPrint.api.domain.produto;
 
 public record DadosListagemProduto(Long id, String nome, String altura, String largura, String profundidade, Integer quantidadeEstoque) {
 
