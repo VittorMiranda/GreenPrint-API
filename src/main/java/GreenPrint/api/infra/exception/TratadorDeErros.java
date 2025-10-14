@@ -1,4 +1,4 @@
-package GreenPrint.api.infra;
+package GreenPrint.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
