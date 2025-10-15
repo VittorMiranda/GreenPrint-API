@@ -4,23 +4,33 @@ import GreenPrint.api.domain.usuario.DadosAutenmticacao;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
 public class AutenticacaoController {
 
-    private AuthenticationManager manager;
+    private final AuthenticationManager manager;
+
+    public AutenticacaoController(AuthenticationManager manager) {
+        this.manager = manager;
+    }
 
     @PostMapping
-    public ResponseEntity efetuarlogin(@RequestBody @Valid DadosAutenmticacao dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
-        var authentication = manager.authenticate(token);
+    public ResponseEntity<?> efetuarLogin(@RequestBody @Valid DadosAutenmticacao dados) {
+        try {
+            Authentication auth = manager.authenticate(
+                    new UsernamePasswordAuthenticationToken(dados.email(), dados.senha())
+            );
 
-        return ResponseEntity.ok().build();
+            // Login bem-sucedido
+            return ResponseEntity.ok().body("{\"mensagem\": \"Login realizado com sucesso!\"}");
+        } catch (BadCredentialsException e) {
+            // Senha ou usuário incorreto
+            return ResponseEntity.status(401).body("{\"erro\": \"Usuário ou senha inválidos.\"}");
+        }
     }
 }
