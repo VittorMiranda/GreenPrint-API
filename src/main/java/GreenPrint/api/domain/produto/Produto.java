@@ -1,10 +1,14 @@
 package GreenPrint.api.domain.produto;
 
+import GreenPrint.api.domain.imagem_produto.ImagemProduto;
+import GreenPrint.api.domain.preco_produto.PrecoProduto;
 import GreenPrint.api.domain.tipo_papelao.TipoPapelao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
+
+import java.util.List;
 
 @Table(name = "produto")
 @Entity(name = "Produto")
@@ -34,6 +38,12 @@ public class Produto {
     @JoinColumn(name = "id_tipo_papelao", nullable = false)
     private TipoPapelao tipoPapelao;
 
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrecoProduto> precos;
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ImagemProduto> imagens;
+
     public Produto(DadosCadastroProduto dados, TipoPapelao tipoPapelao) {
         this.nome = dados.nome();
         this.altura = dados.altura();
@@ -48,8 +58,32 @@ public class Produto {
     }
 
     public void atualizarInformacoes(DadosAtualizacaoProduto dados) {
+        if (dados.nome().equals(this.nome)) {
+            this.nome = dados.nome();
+        }
+        if (dados.altura().equals(this.altura)) {
+            this.altura = dados.altura();
+        }
+        if (dados.largura().equals(this.largura)) {
+            this.largura = dados.largura();
+        }
+        if (dados.profundidade().equals(this.profundidade)) {
+            this.profundidade = dados.profundidade();
+        }
+        if (dados.volumeSuportado().equals(this.volumeSuportado)) {
+            this.volumeSuportado = dados.volumeSuportado();
+        }
         if (dados.quantidadeEstoque() != null) {
             this.quantidadeEstoque = dados.quantidadeEstoque();
+        }
+        if (dados.cor() != null) {
+            this.cor = dados.cor();
+        }
+        if (dados.nomeProjeto() != null) {
+            this.projetoPrincipalNome = dados.nomeProjeto();
+        }
+        if (dados.descricaoProjeto() != null) {
+            this.projetoPrincipalDescricao = dados.descricaoProjeto();
         }
     }
 }

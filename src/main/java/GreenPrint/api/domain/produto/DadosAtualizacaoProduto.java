@@ -6,6 +6,25 @@ import jakarta.validation.constraints.NotNull;
 public record DadosAtualizacaoProduto(
         @NotNull
         Long id,
-        Integer quantidadeEstoque) {
+        @NotBlank
+        String nome,
+        @NotBlank
+        String altura,
+        @NotBlank
+        String largura,
+        @NotBlank
+        String profundidade,
+        @NotBlank
+        String cor,
+        @NotBlank
+        String nomeProjeto,
+        String descricaoProjeto,
+        @NotNull
+        Integer volumeSuportado,
+        @NotNull
+        Integer quantidadeEstoque,
+        @NotBlank
+        Long idTipoPapelao
+) {
 
 }
