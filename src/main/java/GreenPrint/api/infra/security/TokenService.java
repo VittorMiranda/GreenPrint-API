@@ -2,6 +2,7 @@ package GreenPrint.api.infra.security;
 
 import GreenPrint.api.domain.usuario.Usuario;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,16 @@ public class TokenService {
                     .sign(algoritmo);
         } catch (JWTCreationException exception){
             throw new RuntimeException("erro ao gerrar token jwt", exception);
+        }
+    }
+
+    public String getSubject(String tokenJWT){
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritmo).withIssuer("API Greenprint").build().verify(tokenJWT)
+                    .getSubject();
+        }catch (JWTCreationException exception){
+            throw new RuntimeException("Token JWT invalido ou expirado!");
         }
     }
 
