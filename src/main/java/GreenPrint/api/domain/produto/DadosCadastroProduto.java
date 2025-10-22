@@ -26,15 +26,15 @@ public record DadosCadastroProduto(
         Integer volumeSuportado,
         @NotNull
         Integer quantidadeEstoque,
-        @NotBlank
+        @NotNull
         Long idTipoPapelao,
         @NotNull
         BigDecimal valorCompra,
         @NotNull
         BigDecimal valorVenda,
-        @NotBlank
-        byte[] imagem,
-        String tipoImagem
+        @NotNull
+        List<DadosImagemProduto> imagens
+
 
 ) {}
 

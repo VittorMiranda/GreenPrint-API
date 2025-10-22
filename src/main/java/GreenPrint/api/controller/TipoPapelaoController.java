@@ -11,7 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("tipo_papelao")
+@RequestMapping("/tipo_papelao")
 
 
 public class TipoPapelaoController {
@@ -26,7 +26,7 @@ public class TipoPapelaoController {
     }
 
     @GetMapping
-    public Page<DadosListagemTipoPapelao> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable){
+    public Page<DadosListagemTipoPapelao> listar(@PageableDefault(sort = {"nome"}) Pageable pageable){
         return  tipoPapelaoRepository.findAll(pageable).map(DadosListagemTipoPapelao::new);
 
     }

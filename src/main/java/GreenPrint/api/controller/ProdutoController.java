@@ -1,5 +1,6 @@
 package GreenPrint.api.controller;
 
+import GreenPrint.api.domain.imagem_produto.DadosImagemProduto;
 import GreenPrint.api.domain.imagem_produto.ImagemProduto;
 import GreenPrint.api.domain.imagem_produto.ImagemProdutoRepository;
 import GreenPrint.api.domain.preco_produto.PrecoProduto;
@@ -51,9 +52,11 @@ public class ProdutoController {
         }
 
         // Salvar imagem
-        if (dados.imagem() != null) {
-            ImagemProduto imagem = new ImagemProduto(produto, dados.imagem(), dados.tipoImagem());
-            imagemProdutoRepository.save(imagem);
+        if (dados.imagens() != null) {
+            for (DadosImagemProduto img : dados.imagens()) {
+                ImagemProduto imagem = new ImagemProduto(produto, img.arquivoImagem(), img.tipoImagem());
+                imagemProdutoRepository.save(imagem);
+            }
         }
 
         var uri = uriComponentsBuilder.path("/produtos/{id}").buildAndExpand(produto.getIdProduto()).toUri();

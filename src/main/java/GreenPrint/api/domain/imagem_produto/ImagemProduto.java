@@ -3,6 +3,7 @@ package GreenPrint.api.domain.imagem_produto;
 import GreenPrint.api.domain.produto.Produto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -26,7 +27,7 @@ public class ImagemProduto {
 
     private String tipoImagem;
 
-    public ImagemProduto(Produto produto, @NotBlank byte[] imagem, String tipoImagem) {
+    public ImagemProduto(Produto produto, @NotNull byte[] imagem, String tipoImagem) {
         this.produto = produto;
         this.arquivoImagem = imagem;
         this.tipoImagem = tipoImagem;

@@ -1,9 +1,46 @@
 package GreenPrint.api.domain.produto;
 
-public record DadosListagemProduto(Long id, String nome, String altura, String largura, String profundidade, Integer quantidadeEstoque) {
+import GreenPrint.api.domain.imagem_produto.DadosImagemProduto;
+import GreenPrint.api.domain.imagem_produto.ImagemProduto;
+
+import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public record DadosListagemProduto(
+        Long id,
+        String nome,
+        String cor,
+        Integer altura,
+        Integer largura,
+        Integer profundidade,
+        Integer volume,
+        List<String> images
+) {
 
     public DadosListagemProduto(Produto produto){
-        this(produto.getIdProduto(), produto.getNome(), produto.getAltura(), produto.getLargura(), produto.getProfundidade(), produto.getQuantidadeEstoque());
+        this(
+                produto.getIdProduto(),
+                produto.getNome(),
+                produto.getCor(),
+                tryParseInt(produto.getAltura()),
+                tryParseInt(produto.getLargura()),
+                tryParseInt(produto.getProfundidade()),
+                produto.getVolumeSuportado(),
+                produto.getImagens() != null ?
+                        produto.getImagens().stream()
+                                .map(img -> new DadosImagemProduto(img.getArquivoImagem(), img.getTipoImagem()))
+                                .map(DadosImagemProduto::getArquivoBase64)
+                                .collect(Collectors.toList())
+                        : List.of() // caso não haja imagens
+        );
     }
 
+    private static Integer tryParseInt(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 }
