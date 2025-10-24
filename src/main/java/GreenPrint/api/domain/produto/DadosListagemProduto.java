@@ -3,6 +3,7 @@ package GreenPrint.api.domain.produto;
 import GreenPrint.api.domain.imagem_produto.DadosImagemProduto;
 import GreenPrint.api.domain.imagem_produto.ImagemProduto;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,10 +16,9 @@ public record DadosListagemProduto(
         Integer largura,
         Integer profundidade,
         Integer volume,
-        List<String> images
+        List<DadosImagemProduto> imagens
 ) {
-
-    public DadosListagemProduto(Produto produto){
+    public DadosListagemProduto(Produto produto) {
         this(
                 produto.getIdProduto(),
                 produto.getNome(),
@@ -27,12 +27,11 @@ public record DadosListagemProduto(
                 tryParseInt(produto.getLargura()),
                 tryParseInt(produto.getProfundidade()),
                 produto.getVolumeSuportado(),
-                produto.getImagens() != null ?
-                        produto.getImagens().stream()
-                                .map(img -> new DadosImagemProduto(img.getArquivoImagem(), img.getTipoImagem()))
-                                .map(DadosImagemProduto::getArquivoBase64)
-                                .collect(Collectors.toList())
-                        : List.of() // caso não haja imagens
+                produto.getImagens() != null
+                        ? produto.getImagens().stream()
+                        .map(img -> new DadosImagemProduto(img.getArquivoImagem(), img.getTipoImagem()))
+                        .toList()
+                        : List.of()
         );
     }
 

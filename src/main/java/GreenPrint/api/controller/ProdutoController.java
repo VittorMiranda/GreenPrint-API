@@ -65,7 +65,7 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemProduto>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable){
+    public ResponseEntity<Page<DadosListagemProduto>> listar(@PageableDefault(size = 30, sort = {"nome"}) Pageable pageable){
         var page = produtoRepository.findAll(pageable).map(DadosListagemProduto::new);
         return  ResponseEntity.ok(page);
     }
