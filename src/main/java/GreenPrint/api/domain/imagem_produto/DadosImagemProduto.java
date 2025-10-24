@@ -8,7 +8,6 @@ import java.util.Base64;
 
 public record DadosImagemProduto(
         @NotNull
-        @JsonIgnore
         byte[] arquivoImagem,
         String tipoImagem
 ) {

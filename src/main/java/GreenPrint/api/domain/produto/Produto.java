@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "produto")
@@ -42,7 +43,8 @@ public class Produto {
     private List<PrecoProduto> precos;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImagemProduto> imagens;
+    private List<ImagemProduto> imagens = new ArrayList<>();
+
 
     public Produto(DadosCadastroProduto dados, TipoPapelao tipoPapelao) {
         this.nome = dados.nome();

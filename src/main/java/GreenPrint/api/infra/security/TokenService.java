@@ -24,6 +24,8 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("API Greenprint")
                     .withSubject(usuario.getEmail())
+                    .withClaim("nome", usuario.getNome())
+                    .withClaim("papel", usuario.getPapel())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception){

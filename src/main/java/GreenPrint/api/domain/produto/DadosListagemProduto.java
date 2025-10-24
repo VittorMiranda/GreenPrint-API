@@ -29,9 +29,11 @@ public record DadosListagemProduto(
                 produto.getVolumeSuportado(),
                 produto.getImagens() != null
                         ? produto.getImagens().stream()
+                        .filter(img -> img.getArquivoImagem() != null) // <--- filtra nulos
                         .map(img -> new DadosImagemProduto(img.getArquivoImagem(), img.getTipoImagem()))
                         .toList()
                         : List.of()
+
         );
     }
 

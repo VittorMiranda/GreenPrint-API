@@ -27,8 +27,17 @@ public class Usuario implements UserDetails {
     private String email;
     private String senha;
     private String telefone;
+
     @Enumerated(EnumType.STRING)
     private Papel papel;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getPapel() {
+        return papel.name();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
