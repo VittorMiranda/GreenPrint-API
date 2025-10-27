@@ -89,8 +89,7 @@ public class ProdutoController {
     @Transactional
     public ResponseEntity deletar(@PathVariable Long id){
       produtoRepository.deleteById(id);
-
-        return  ResponseEntity.noContent().build();
+      return  ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")

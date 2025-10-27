@@ -1,7 +1,11 @@
 package GreenPrint.api.domain.produto;
 
+import GreenPrint.api.domain.imagem_produto.DadosImagemProduto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public record DadosAtualizacaoProduto(
         @NotNull
@@ -24,7 +28,13 @@ public record DadosAtualizacaoProduto(
         @NotNull
         Integer quantidadeEstoque,
         @NotBlank
-        Long idTipoPapelao
+        Long idTipoPapelao,
+        @NotNull
+        BigDecimal valorCompra,
+        @NotNull
+        BigDecimal valorVenda,
+        @NotNull
+        List<DadosImagemProduto> imagens
 ) {
 
 }
