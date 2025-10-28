@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/cadastro").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produtos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produtos/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/tipo_papelao").permitAll()
