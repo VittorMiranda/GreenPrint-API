@@ -39,6 +39,13 @@ public class Usuario implements UserDetails {
         return papel.name();
     }
 
+    public Papel getPapelEnum() {
+        return papel;
+    }
+    public void setPapel(Papel novoPapel) {
+        this.papel = novoPapel;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + papel.name()));
@@ -73,4 +80,5 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
