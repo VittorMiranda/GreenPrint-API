@@ -1,6 +1,8 @@
 package GreenPrint.api.domain.usuario;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -81,4 +83,9 @@ public class Usuario implements UserDetails {
         return true;
     }
 
+    public void atualizarDados(DadosAtualizacaoUsuario dados) {
+        if (dados.nome() != null && !dados.nome().isBlank()) this.nome = dados.nome();
+        if (dados.email() != null && !dados.email().isBlank()) this.email = dados.email();
+        if (dados.telefone() != null) this.telefone = dados.telefone();
+    }
 }

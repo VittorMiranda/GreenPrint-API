@@ -39,8 +39,8 @@ public class Produto {
     @JoinColumn(name = "id_tipo_papelao", nullable = false)
     private TipoPapelao tipoPapelao;
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PrecoProduto> precos;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PrecoProduto> precos = new ArrayList<>();
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImagemProduto> imagens = new ArrayList<>();

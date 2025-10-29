@@ -71,4 +71,22 @@ public class UsuarioController {
         return ResponseEntity.ok("Papel do usuário atualizado com sucesso!");
     }
 
+    @PutMapping
+    @Transactional
+    public ResponseEntity<?> atualizarUsuario(@RequestBody @Valid DadosAtualizacaoUsuario dados) {
+        var usuarioOpt = repository.findById(dados.id());
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var usuario = usuarioOpt.get();
+
+        // Atualiza os dados usando um único método do usuário
+        usuario.atualizarDados(dados);
+
+        repository.save(usuario);
+
+        return ResponseEntity.ok(new DadosDetalheUsuario(usuario));
+    }
+
 }

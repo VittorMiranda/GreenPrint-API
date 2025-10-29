@@ -37,8 +37,8 @@ public record DadosDetalhamentoProduto(
                 produto.getVolumeSuportado(),
                 produto.getQuantidadeEstoque(),
                 produto.getTipoPapelao().getIdTipoPapelao(),
-                produto.getPrecos().getLast().getValorCompra(),
-                produto.getPrecos().getLast().getValorVenda(),
+                getUltimoValorCompra(produto),
+                getUltimoValorVenda(produto),
                 produto.getProjetoPrincipalNome(),
                 produto.getProjetoPrincipalDescricao(),
                 produto.getImagens() != null
@@ -56,4 +56,19 @@ public record DadosDetalhamentoProduto(
             return null;
         }
     }
+
+    private static BigDecimal getUltimoValorCompra(Produto produto) {
+        if (produto.getPrecos() != null && !produto.getPrecos().isEmpty()) {
+            return produto.getPrecos().getLast().getValorCompra();
+        }
+        return BigDecimal.ZERO; // ou null, se preferir
+    }
+
+    private static BigDecimal getUltimoValorVenda(Produto produto) {
+        if (produto.getPrecos() != null && !produto.getPrecos().isEmpty()) {
+            return produto.getPrecos().getLast().getValorVenda();
+        }
+        return BigDecimal.ZERO;
+    }
+
 }

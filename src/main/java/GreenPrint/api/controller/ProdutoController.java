@@ -8,6 +8,7 @@ import GreenPrint.api.domain.preco_produto.PrecoProdutoRepository;
 import GreenPrint.api.domain.produto.*;
 import GreenPrint.api.domain.tipo_papelao.TipoPapelao;
 import GreenPrint.api.domain.tipo_papelao.TipoPapelaoRepository;
+import GreenPrint.api.infra.exception.RegraDeNegocioException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class ProdutoController {
     public ResponseEntity<?> cadastrar(@RequestBody @Valid DadosCadastroProduto dados, UriComponentsBuilder uriComponentsBuilder){
         // Busca a entidade TipoPapelao pelo ID do DTO
         TipoPapelao tipo = tipoPapelaoRepository.findById(dados.idTipoPapelao())
-                .orElseThrow(() -> new RuntimeException("Tipo de papelão não encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Tipo de papelão não encontrado"));
 
         // Cria o Produto usando o construtor que recebe DTO + TipoPapelao
         Produto produto = new Produto(dados, tipo);
@@ -77,7 +78,7 @@ public class ProdutoController {
 
         if (dados.idTipoPapelao() != null) {
             TipoPapelao tipo = tipoPapelaoRepository.findById(dados.idTipoPapelao())
-                    .orElseThrow(() -> new RuntimeException("Tipo de papelão não encontrado"));
+                    .orElseThrow(() -> new RegraDeNegocioException("Tipo de papelão não encontrado"));
             produto.setTipoPapelao(tipo);
         }
 

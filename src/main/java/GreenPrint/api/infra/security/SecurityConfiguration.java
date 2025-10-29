@@ -1,6 +1,7 @@
 package GreenPrint.api.infra.security;
 
 import GreenPrint.api.domain.usuario.AutenticacaoService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import java.io.IOException;
 
 import java.util.List;
 
@@ -57,6 +59,12 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/produtos/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/tipo_papelao").permitAll()
                         .anyRequest().authenticated())
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                handleAccessDenied(response))
+                        .authenticationEntryPoint((request, response, authException) ->
+                                handleUnauthorized(response))
+                )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -87,5 +95,22 @@ public class SecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
+    }
+
+    private void handleAccessDenied(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write("""
+            {"mensagem": "Acesso negado: você não tem permissão para realizar esta ação."}
+        """);
+    }
+
+    // Tratamento do erro 401
+    private void handleUnauthorized(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write("""
+            {"mensagem": "Usuário não autenticado ou token inválido."}
+        """);
     }
 }

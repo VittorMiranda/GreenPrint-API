@@ -27,7 +27,7 @@ public record DadosAtualizacaoProduto(
         Integer volumeSuportado,
         @NotNull
         Integer quantidadeEstoque,
-        @NotBlank
+        @NotNull
         Long idTipoPapelao,
         @NotNull
         BigDecimal valorCompra,
