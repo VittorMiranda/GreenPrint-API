@@ -5,6 +5,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,9 @@ public class UsuarioController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PostMapping("/cadastro")
     public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid DadosCadastroUsuario dados) {
@@ -88,5 +93,29 @@ public class UsuarioController {
 
         return ResponseEntity.ok(new DadosDetalheUsuario(usuario));
     }
+    @PutMapping("/alterar-senha")
+    @Transactional
+    public ResponseEntity<?> alterarSenha(@RequestBody @Valid DadosAlterarSenha dados) {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()) {
+            return ResponseEntity.status(401).body("Usuário não autenticado");
+        }
+
+        Usuario usuario = (Usuario) auth.getPrincipal();
+
+        // Validar senha atual
+        if (!passwordEncoder.matches(dados.senhaAtual(), usuario.getPassword())) {
+            return ResponseEntity.badRequest().body("Senha atual incorreta!");
+        }
+
+        // Atualizar senha
+        usuario.setSenha(passwordEncoder.encode(dados.senhaNova()));
+        repository.save(usuario);
+
+        return ResponseEntity.ok("Senha alterada com sucesso!");
+    }
+
+
 
 }

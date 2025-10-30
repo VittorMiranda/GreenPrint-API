@@ -88,4 +88,8 @@ public class Usuario implements UserDetails {
         if (dados.email() != null && !dados.email().isBlank()) this.email = dados.email();
         if (dados.telefone() != null) this.telefone = dados.telefone();
     }
+
+    public void setSenha(String encode) {
+        if (encode != null && !encode.isBlank()) this.senha = encode;
+    }
 }

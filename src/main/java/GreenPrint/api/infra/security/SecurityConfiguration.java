@@ -57,7 +57,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/usuarios/cadastro").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produtos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produtos/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/produtos").hasAnyRole("FUNCIONARIO", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/produtos").hasAnyRole("FUNCIONARIO", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/produtos").hasAnyRole("FUNCIONARIO", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET, "/tipo_papelao").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/usuarios/alterar-senha").authenticated()
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
                         .accessDeniedHandler((request, response, accessDeniedException) ->
